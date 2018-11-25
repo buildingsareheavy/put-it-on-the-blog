@@ -1,0 +1,18 @@
+# ignore all files starting with . or ~
+.*
+~*
+
+# ignore OS generated files
+Icon?
+thumbs.db
+Thumbs.db
+
+# track file (i.e. do NOT ignore it)
+!.gitignore
+!package.json
+!package-lock.json
+!readme.md
+!README.md
+
+# ignore node/gulp dependency directories
+node_modules/

@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Karla:400|Cardo:400");
+body {
+  background: #f4f4f4;
+  color: #212121; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cardo", serif; }
+
+p,
+span,
+a {
+  font-family: "Karla", sans-serif; }
+
+.container {
+  margin: 0 auto;
+  max-width: 800px; }
+  .container div {
+    background: #fff;
+    padding: 2rem;
+    margin-bottom: 2rem; }
+    .container div:last-of-type {
+      margin-bottom: 0; }
