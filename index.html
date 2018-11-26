@@ -12,14 +12,17 @@
       href="./css/styles.css"
     />
   </head>
-  <body>
+  <body style="background: gold;">
     <nav id="mainNav"></nav>
     <h1>Google Sheets API Blog</h1>
     <div class="container"><div id="posts"></div></div>
     <footer id="footer">
       <p>
-        &copy; 2018 -
-        <a href="https://buildingsareheavy.com">Buildings Are Heavy.</a>
+        &copy;
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        - <a href="https://buildingsareheavy.com">Buildings Are Heavy.</a>
       </p>
     </footer>
     <script src="./js/app.js"></script>

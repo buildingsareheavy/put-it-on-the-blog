@@ -12,7 +12,7 @@
       href="./css/styles.css"
     />
   </head>
-  <body>
+  <body style="background: lightblue;">
     <nav id="mainNav"></nav>
     <h1>About</h1>
     <div class="container">
@@ -22,7 +22,7 @@
             My friend Ginnia and I have an ongoing joke when we text each other:
             "put it on the blog!" But we never actually had a blog to write to.
             I wanted something quick and easy where anyone could easily post and
-            not have to not worry about logins or managing a database.
+            not have to worry about logins or managing a database.
           </p>
           <p>
             Then my friend
@@ -65,8 +65,11 @@
     </div>
     <footer id="footer">
       <p>
-        &copy; 2018 -
-        <a href="https://buildingsareheavy.com">Buildings Are Heavy.</a>
+        &copy;
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        - <a href="https://buildingsareheavy.com">Buildings Are Heavy.</a>
       </p>
     </footer>
     <script src="./js/app.js"></script>

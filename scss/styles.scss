@@ -4,7 +4,7 @@
 
 @import url("https://fonts.googleapis.com/css?family=Karla:400|Cardo:400");
 
-$background: #f4f4f4;
+$background: gold;
 $foreground: #fff;
 $fontcolor: #212121;
 $width: 700px;
@@ -14,7 +14,7 @@ $width: 700px;
 //
 
 body {
-  background: $background;
+  // background: $background; // Now is inline on each page
   color: $fontcolor;
   text-align: center;
 }
@@ -33,7 +33,11 @@ img {
 
 .container {
   margin: 0 auto;
+  padding: 2rem;
   max-width: $width;
+  background: $foreground;
+  border: 1px solid $fontcolor;
+  box-shadow: 0px 15px 0px 5px $fontcolor;
 }
 
 h1 {
@@ -87,7 +91,7 @@ nav {
     padding: 1rem 0;
     right: 0; //reset
     top: 0; // reset
-    box-shadow: 0px 2px 5px $background;
+    box-shadow: 0px 2px 10px 0px $fontcolor;
     li {
       display: inline;
 
@@ -107,9 +111,21 @@ nav {
 
 #posts {
   div {
-    background: $foreground;
-    padding: 2rem;
+    border-bottom: 1px solid $fontcolor;
     margin: 1rem 0;
+    padding: 3rem 2rem 2rem 2rem;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    transition: all 0.6s;
+    @media screen and (max-width: $width) {
+      padding: 1.5rem 2rem 2rem 2rem; // reset
+    }
+    &:hover {
+      // background: honeydew;
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
     .post-name {
       text-align: right;
       &::before {
@@ -146,6 +162,7 @@ nav {
 }
 
 #bio-more {
+  border-top: 1px solid $fontcolor;
   background: $foreground;
   padding: 2rem;
   margin-top: 3rem;
@@ -156,10 +173,13 @@ nav {
 //
 
 #footer {
-  max-width: calc(#{$width} - 2rem);
-  margin: 3rem auto 0 auto;
+  max-width: calc(#{$width} + 2rem + 12px);
+  margin: -5px auto 2rem auto;
   background: $fontcolor;
   padding: 1rem;
+  @media screen and (max-width: calc(#{$width} + 4rem + 24px)) {
+    margin: -5px;
+  }
   p,
   a {
     color: $foreground;
