@@ -5,30 +5,29 @@ fetch(
     return response.json();
   })
   .then(data => {
-    // Work with JSON data here
     var postArray = data.values;
 
-    // Not sure if I'm supposed to do this all within "then", but it's not working outside of "fetch"
-    var postItem = document.createElement("p");
-    var postContainer = document.getElementById("posts");
-    // Everything is going into the same p tag, not it's own
-    // Also need to create a div foreach and put that p tag into it
-    postContainer.appendChild(postItem);
+    function addPost(addName, addText) {
+      var mainContainer = document.getElementById("posts");
+      var postContainer = document.createElement("div");
+      var postName = document.createElement("p");
+      var postText = document.createElement("p");
+
+      postName.innerText = addName;
+      postText.innerText = addText;
+      mainContainer
+        .appendChild(postContainer)
+        .appendChild(postName)
+        .appendChild(postText);
+    }
 
     // forEach for each column
     postArray.forEach(function(column) {
       name = column[0];
       text = column[1];
 
-      // Display name
-      var postName = document.createTextNode(name);
-      postItem.appendChild(postName);
-
-      // Display text
-      var postText = document.createTextNode(text);
-      postItem.appendChild(postText);
-
-      console.log(name + " >> " + text);
+      // Display name and text
+      addPost(name, text);
     }); // end of nameArray.forEach
   }) // end of then
   .catch(err => {
