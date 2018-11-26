@@ -27,7 +27,10 @@ a {
 .container {
   margin: 0 auto;
   max-width: 800px;
-  div {
+  h1 {
+    text-align: center;
+  }
+  #posts div {
     background: $foreground;
     padding: 2rem;
     margin-bottom: 2rem;

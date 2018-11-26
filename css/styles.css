@@ -19,9 +19,11 @@ a {
 .container {
   margin: 0 auto;
   max-width: 800px; }
-  .container div {
+  .container h1 {
+    text-align: center; }
+  .container #posts div {
     background: #fff;
     padding: 2rem;
     margin-bottom: 2rem; }
-    .container div:last-of-type {
+    .container #posts div:last-of-type {
       margin-bottom: 0; }
