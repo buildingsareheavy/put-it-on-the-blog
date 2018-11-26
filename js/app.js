@@ -35,7 +35,8 @@ fetch(
     return response.json();
   })
   .then(data => {
-    const postArray = data.values;
+    // reverse order so new posts show on top
+    const postArray = data.values.reverse();
 
     function addPost(addName, addText) {
       const mainContainer = document.getElementById("posts");
