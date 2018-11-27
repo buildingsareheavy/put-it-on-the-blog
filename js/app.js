@@ -72,14 +72,3 @@ fetch(
   .catch(err => {
     // Do something for an error here
   });
-
-//
-// Google Script
-//
-
-fetch(
-  "https://script.google.com/macros/s/AKfycbwti_ReoJGQ6nqd_QbEVNxNlmFhKxLD4G_hItvCYVw3m_oLS7E/exec"
-)
-  .then(res => res.json())
-  .then(res => console.log(res))
-  .catch(error => console.error(`Error: ${error}`));
