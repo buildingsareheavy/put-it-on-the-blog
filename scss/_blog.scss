@@ -1,0 +1,34 @@
+//
+// Blog posts
+//
+
+#posts {
+  div {
+    border-bottom: 1px solid $fontcolor;
+    margin: 1rem 0;
+    padding: 3rem 2rem 2rem 2rem;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    transition: all 0.6s;
+    @media screen and (max-width: $width) {
+      padding: 1.5rem 2rem 2rem 2rem; // reset
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .post-name {
+      text-align: right;
+      &::before {
+        content: "- ";
+      }
+    }
+    .post-text {
+      text-align: center;
+      font-style: italic;
+      &::after,
+      &::before {
+        content: '"';
+      }
+    }
+  }
+}

@@ -109,19 +109,6 @@ nav {
   padding: 2rem;
   margin-top: 3rem; }
 
-#footer {
-  max-width: calc(700px + 2rem + 12px);
-  margin: -5px auto 2rem auto;
-  background: #212121;
-  padding: 1rem; }
-  @media screen and (max-width: calc(700px + 4rem + 24px)) {
-    #footer {
-      margin: -5px; } }
-  #footer p,
-  #footer a {
-    color: #fff;
-    text-decoration: none; }
-
 #test-form {
   padding: 2rem 0; }
   #test-form .form-group {
@@ -157,3 +144,16 @@ nav {
     #test-form button:hover {
       background: #fff;
       color: #212121; }
+
+#footer {
+  max-width: calc(700px + 2rem + 12px);
+  margin: -5px auto 2rem auto;
+  background: #212121;
+  padding: 1rem; }
+  @media screen and (max-width: calc(700px + 4rem + 24px)) {
+    #footer {
+      margin: -5px; } }
+  #footer p,
+  #footer a {
+    color: #fff;
+    text-decoration: none; }
