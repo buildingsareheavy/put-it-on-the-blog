@@ -56,7 +56,10 @@ h6 {
 
 p,
 span,
-a {
+a,
+label,
+input,
+button {
   font-family: "Karla", sans-serif;
 }
 
@@ -119,9 +122,6 @@ nav {
     transition: all 0.6s;
     @media screen and (max-width: $width) {
       padding: 1.5rem 2rem 2rem 2rem; // reset
-    }
-    &:hover {
-      // background: honeydew;
     }
     &:last-of-type {
       border-bottom: none;
@@ -190,3 +190,50 @@ nav {
 //
 // Submit
 //
+
+#test-form {
+  padding: 2rem 0;
+  .form-group {
+    max-width: $width;
+  }
+  label {
+    display: block;
+    padding-right: 18.5rem;
+    padding-bottom: 0.25rem;
+    font-weight: bold;
+  }
+  input {
+    border: 1px solid $fontcolor;
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 20rem;
+    font-style: italic;
+    &:focus {
+      background: honeydew;
+    }
+    &:first-of-type {
+      margin-bottom: 1rem;
+    }
+  }
+  @media screen and (max-width: $width) {
+    label {
+      text-align: left;
+    }
+    input {
+      width: 100%;
+    }
+  }
+  button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    color: $foreground;
+    background: $fontcolor;
+    border: 1px solid $fontcolor;
+    transition: all 0.2s;
+    &:hover {
+      background: $foreground;
+      color: $fontcolor;
+    }
+  }
+}

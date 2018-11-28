@@ -33,7 +33,10 @@ h6 {
 
 p,
 span,
-a {
+a,
+label,
+input,
+button {
   font-family: "Karla", sans-serif; }
 
 a {
@@ -118,3 +121,39 @@ nav {
   #footer a {
     color: #fff;
     text-decoration: none; }
+
+#test-form {
+  padding: 2rem 0; }
+  #test-form .form-group {
+    max-width: 700px; }
+  #test-form label {
+    display: block;
+    padding-right: 18.5rem;
+    padding-bottom: 0.25rem;
+    font-weight: bold; }
+  #test-form input {
+    border: 1px solid #212121;
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 20rem;
+    font-style: italic; }
+    #test-form input:focus {
+      background: honeydew; }
+    #test-form input:first-of-type {
+      margin-bottom: 1rem; }
+  @media screen and (max-width: 700px) {
+    #test-form label {
+      text-align: left; }
+    #test-form input {
+      width: 100%; } }
+  #test-form button {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #212121;
+    border: 1px solid #212121;
+    transition: all 0.2s; }
+    #test-form button:hover {
+      background: #fff;
+      color: #212121; }
