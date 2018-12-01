@@ -1,6 +1,6 @@
 // Reference: https://github.com/shaharyogev/post-google-sheets-form/blob/master/index.html
 
-// This all needs
+// This all needs to be refactored to vanilla javascript
 $(document).ready(function() {
   $.fn.serializeObject = function() {
     var o = {};
