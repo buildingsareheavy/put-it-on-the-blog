@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
     return o;
   };
-  var form = $("form#test-form"),
+  var form = $("form#submit-form"),
     url =
       "https://script.google.com/macros/s/AKfycbwti_ReoJGQ6nqd_QbEVNxNlmFhKxLD4G_hItvCYVw3m_oLS7E/exec";
   form.submit(function(e) {
@@ -28,7 +28,7 @@ $(document).ready(function() {
       dataType: "json",
       data: form.serializeObject()
     });
-    $(".thanks p").html(
+    $(".form-success p").html(
       "<p>Thank you for contributing! 🌈</p><p>It has been added to the <a href='./index.html'>blog</a>.</p>"
     );
     $(".form-group").remove();
