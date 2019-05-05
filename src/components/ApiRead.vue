@@ -23,10 +23,10 @@ export default {
   mounted() {
     axios({
       // eslint-disable-next-line
-      url: API_URL + API_SUFFIX,
+      url: process.env.API_URL + process.env.API_SUFFIX,
       headers: {
         // eslint-disable-next-line
-        Authorization: "Bearer " + API_KEY
+        Authorization: "Bearer " + process.env.API_KEY
       },
       params: {
         sortField: "Name",
