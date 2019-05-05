@@ -23,10 +23,10 @@ export default {
   mounted() {
     axios({
       // eslint-disable-next-line
-      url: process.env.API_URL + process.env.API_SUFFIX,
+      url: env.API_URL + env.API_SUFFIX,
       headers: {
         // eslint-disable-next-line
-        Authorization: "Bearer " + process.env.API_KEY
+        Authorization: "Bearer " + env.API_KEY
       },
       params: {
         sortField: "Name",
@@ -39,7 +39,6 @@ export default {
       .catch(error => {
         // eslint-disable-next-line
         console.log("Damn! " + error);
-        alert(error);
       });
   }
 };
