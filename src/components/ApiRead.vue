@@ -9,6 +9,7 @@
 
 <script>
 import axios from "axios";
+import { log } from "util";
 
 export default {
   name: "ApiRead",
@@ -23,10 +24,10 @@ export default {
   mounted() {
     axios({
       // eslint-disable-next-line
-      url: env.API_URL + env.API_SUFFIX,
+      url: process.env.API_URL + process.env.API_SUFFIX,
       headers: {
         // eslint-disable-next-line
-        Authorization: "Bearer " + env.API_KEY
+        Authorization: "Bearer " + process.env.API_KEY
       },
       params: {
         sortField: "Name",
@@ -40,6 +41,11 @@ export default {
         // eslint-disable-next-line
         console.log("Damn! " + error);
       });
+  },
+  created() {
+    console.log("API_URL is: " + API_URL);
+    console.log("env.API_URL is: " + env.API_URL);
+    console.log("process.env.API_URL is: " + process.env.API_URL);
   }
 };
 </script>
