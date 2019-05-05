@@ -37,7 +37,8 @@ export default {
         this.records = response.data.records;
       })
       .catch(error => {
-        // console.log("Damn! " + error);
+        // eslint-disable-next-line
+        console.log("Damn! " + error);
         alert(error);
       });
   }
