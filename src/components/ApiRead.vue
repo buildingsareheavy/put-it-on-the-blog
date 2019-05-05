@@ -1,8 +1,19 @@
 <template>
   <div class="api-read">
-    <div v-for="record in records" :key="record.id">
-      <p class="quote">{{ record.fields.Quote }}-</p>
-      <small>{{ record.fields.Name }}</small>
+    <div class="disconnected" v-if="errors && errors.length">
+      <p>Something went wrong...</p>
+    </div>
+    <div class="connected" v-else>
+      <div v-for="record in records" :key="record.id">
+        <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
+        <p class="quote" v-else>Intentionally Left Blank</p>
+        <small class="name" v-if="record.fields.Name">
+          {{
+          record.fields.Name
+          }}
+        </small>
+        <small class="name" v-else>Anonymous</small>
+      </div>
     </div>
   </div>
 </template>
@@ -12,20 +23,16 @@ import axios from "axios";
 
 export default {
   name: "ApiRead",
-  props: {
-    msg: String
-  },
   data() {
     return {
-      records: []
+      records: [],
+      errors: []
     };
   },
   mounted() {
     axios({
-      // eslint-disable-next-line
       url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
       headers: {
-        // eslint-disable-next-line
         Authorization: "Bearer " + process.env.VUE_APP_API_KEY
       },
       params: {
@@ -35,12 +42,11 @@ export default {
     })
       .then(response => {
         this.records = response.data.records;
-        console.log(process.env.VUE_APP_API_URL);
       })
       .catch(error => {
         // eslint-disable-next-line
         console.log("Damn! " + error);
-        console.log("URL is: " + process.env.VUE_APP_API_URL);
+        this.errors.push(error);
       });
   }
 };
@@ -52,6 +58,11 @@ export default {
   &::before,
   &::after {
     content: '"';
+  }
+}
+.name {
+  &::before {
+    content: "- ";
   }
 }
 </style>
