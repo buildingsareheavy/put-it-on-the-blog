@@ -7,11 +7,7 @@
       <div v-for="record in records" :key="record.id">
         <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
         <p class="quote" v-else>Intentionally Left Blank</p>
-        <small class="name" v-if="record.fields.Name">
-          {{
-          record.fields.Name
-          }}
-        </small>
+        <small class="name" v-if="record.fields.Name">{{ record.fields.Name }}</small>
         <small class="name" v-else>Anonymous</small>
       </div>
     </div>
