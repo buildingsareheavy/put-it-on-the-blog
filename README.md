@@ -1,29 +1,13 @@
-# put-it-on-the-blog
+# Put It On The Blog
 
-## Project setup
-```
-npm install
-```
+A blog where anyone can contribute.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+---
 
-### Compiles and minifies for production
-```
-npm run build
-```
+_NOTE: V2 has been refactored using Vue.js, Axios, and Airtable API. V1 was using vanilla javascript, a small amount of jQuery, and Google Sheets API._
 
-### Run your tests
-```
-npm run test
-```
+---
 
-### Lints and fixes files
-```
-npm run lint
-```
+Pre-production: [https://pedantic-newton-91de25.netlify.com/](https://pedantic-newton-91de25.netlify.com/)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Viewable at: [https://PutItOnTheBlog.co](https://putitontheblog.co)
