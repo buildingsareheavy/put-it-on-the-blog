@@ -15,7 +15,7 @@ export default {
     postQuote() {
       return axios({
         method: "post",
-        url: "https://api.airtable.com/v0/apprxCAgCvkroIzyQ/Table%201",
+        url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + process.env.VUE_APP_API_KEY
