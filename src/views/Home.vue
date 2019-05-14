@@ -21,7 +21,6 @@
           onblur="this.placeholder = 'Anonymous'"
         >
       </p>
-      <span>{{ postResult }}</span>
       <button class="post-button-submit" @click="postSubmit">Submit</button>
       <button class="post-button-cancel" @click="postCancel">Cancel</button>
     </div>
@@ -39,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import Router from "vue-router";
 
 export default {
   name: "home",
@@ -48,8 +48,7 @@ export default {
       errors: [],
       buttonText: "Add Post",
       postName: "",
-      postQuote: "",
-      postResult: ""
+      postQuote: ""
     };
   },
   beforeCreate() {
@@ -75,8 +74,6 @@ export default {
           this.records = response.data.records;
         })
         .catch(error => {
-          // eslint-disable-next-line
-          console.log("Damn! " + error);
           this.errors.push(error);
         });
     },
@@ -102,11 +99,9 @@ export default {
         }
       })
         .then(function(response) {
-          postResult = "yay";
           console.log(response);
         })
         .catch(function(error) {
-          postResult = "nope";
           console.log(error);
         });
     }
@@ -187,6 +182,9 @@ export default {
         margin: 0 1rem;
         border-radius: 20px 20px 0 0;
         transform: translateY(2rem);
+        @media screen and (max-width: $width) {
+          transform: translateY(1rem);
+        }
       }
       input {
         font-size: 1rem;
