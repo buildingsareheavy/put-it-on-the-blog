@@ -1,6 +1,6 @@
 <template>
   <div id="posts">
-    <div class="post-button active" v-if="buttonText === 'Cancel'">
+    <div class="post-button active" v-if="postButtonActive == true">
       <p class="quote">
         <input
           v-model="postQuote"
@@ -21,11 +21,11 @@
           onblur="this.placeholder = 'Anonymous'"
         >
       </p>
-      <button class="post-button-submit" @click="postSubmit">Submit</button>
+      <button class="post-button-submit" @click="postQuotes">Submit</button>
       <button class="post-button-cancel" @click="postCancel">Cancel</button>
     </div>
     <div class="post-button" v-else>
-      <button class="post-button-add" @click="postAdd">{{ buttonText }}</button>
+      <button class="post-button-add" @click="postAdd">Add Post</button>
     </div>
     <div v-for="record in records" :key="record.id">
       <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
@@ -38,7 +38,6 @@
 
 <script>
 import axios from "axios";
-import Router from "vue-router";
 
 export default {
   name: "home",
@@ -46,7 +45,7 @@ export default {
     return {
       records: "",
       errors: [],
-      buttonText: "Add Post",
+      postButtonActive: false,
       postName: "",
       postQuote: ""
     };
@@ -55,19 +54,19 @@ export default {
     document.body.className = "body-home";
   },
   created() {
-    this.loadQuotes();
+    this.getQuotes();
   },
   methods: {
-    loadQuotes() {
+    getQuotes() {
       axios({
         url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
         headers: {
           Authorization: "Bearer " + process.env.VUE_APP_API_KEY
         },
         params: {
-          sortField: "Name",
-          sortDirection: "asc",
-          maxRecords: "3"
+          sortField: "Time",
+          sortDirection: "desc",
+          maxRecords: "5"
         }
       })
         .then(response => {
@@ -78,12 +77,12 @@ export default {
         });
     },
     postAdd() {
-      this.buttonText = "Cancel";
+      this.postButtonActive = true;
     },
     postCancel() {
-      this.buttonText = "Add Post";
+      this.postButtonActive = false;
     },
-    postSubmit() {
+    postQuotes() {
       return axios({
         method: "post",
         url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
@@ -100,8 +99,10 @@ export default {
       })
         .then(function(response) {
           console.log(response);
+          alert("it worked!");
         })
         .catch(function(error) {
+          alert("it failed!");
           console.log(error);
         });
     }
@@ -193,6 +194,7 @@ export default {
     }
     button {
       border: none;
+      outline: none;
       margin: 0 0 -3rem 0;
       background: lightblue;
       transform: translateX(0vw);
@@ -206,6 +208,9 @@ export default {
       &:hover {
         cursor: pointer;
         background: skyblue;
+      }
+      &:focus {
+        outline: none;
       }
     }
     .post-button-cancel {
