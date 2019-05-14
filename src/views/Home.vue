@@ -1,6 +1,7 @@
 <template>
   <div id="posts">
     <div class="post-button active" v-if="postButtonActive == true">
+      <p class="failed" v-if="postButtonFailedMessage">Uh oh... Something went wrong.</p>
       <p class="quote">
         <input
           v-model="postQuote"
@@ -46,6 +47,7 @@ export default {
       records: "",
       errors: [],
       postButtonActive: false,
+      postButtonFailedMessage: false,
       postName: "",
       postQuote: ""
     };
@@ -97,13 +99,14 @@ export default {
           }
         }
       })
-        .then(function(response) {
+        .then(response => {
           console.log(response);
-          alert("it worked!");
+          this.getQuotes();
+          this.postButtonActive = false;
         })
-        .catch(function(error) {
-          alert("it failed!");
+        .catch(error => {
           console.log(error);
+          this.postButtonFailedMessage = true;
         });
     }
   }
@@ -154,6 +157,30 @@ export default {
         &:focus {
           width: 80%;
         }
+      }
+    }
+    .failed {
+      text-align: center;
+      background: salmon;
+      font-weight: 800;
+      border-radius: 0 0 20px 20px;
+      padding: 1rem;
+      margin: 0 auto;
+      display: inline-block;
+      transform: translateY(-4.5rem);
+      background: linear-gradient(
+        -45deg,
+        hotpink,
+        cyan,
+        springgreen,
+        yellow,
+        orange,
+        crimson
+      );
+      background-size: 400% 400%;
+      animation: failedMessage 3s infinite;
+      @media screen and (max-width: $width) {
+        transform: translateY(-3.25rem);
       }
     }
     input {
@@ -227,6 +254,17 @@ export default {
         background: palegreen;
       }
     }
+  }
+}
+@keyframes failedMessage {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 </style>
