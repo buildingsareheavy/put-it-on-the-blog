@@ -1,5 +1,5 @@
 <template>
-  <div id="posts">
+  <div id="posts" :class="{ 'get-quotes-failed' : getQuotesFailed }">
     <div class="post-button active" v-if="postButtonActive == true">
       <p class="failed" v-if="postButtonFailedMessage">Uh oh... Something went wrong.</p>
       <p class="quote">
@@ -26,14 +26,17 @@
       <button class="post-button-submit" @click="postQuotes">Submit</button>
     </div>
     <div class="post-button" v-else>
-      <button class="post-button-add" @click="postAdd">Add Post</button>
+      <button class="post-button-add" @click="postAdd" v-show="!getQuotesFailed">Add Post</button>
     </div>
-    <div v-for="record in records" :key="record.id">
-      <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
-      <p class="quote" v-else>Intentionally Left Blank</p>
-      <p class="name" v-if="record.fields.Name">{{ record.fields.Name }}</p>
-      <p class="name" v-else>Anonymous</p>
-    </div>
+    <p v-if="getQuotesFailed">Uh oh... Looks like something isn't loading right now.</p>
+    <transition-group name="records">
+      <div v-for="record in records" :key="record.id">
+        <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
+        <p class="quote" v-else>Intentionally Left Blank</p>
+        <p class="name" v-if="record.fields.Name">{{ record.fields.Name }}</p>
+        <p class="name" v-else>Anonymous</p>
+      </div>
+    </transition-group>
   </div>
 </template>
 
@@ -48,7 +51,8 @@ export default {
       postButtonActive: false,
       postButtonFailedMessage: false,
       postName: "",
-      postQuote: ""
+      postQuote: "",
+      getQuotesFailed: false
     };
   },
   beforeCreate() {
@@ -75,6 +79,8 @@ export default {
         .catch(error => {
           // eslint-disable-next-line
           console.log("GET: " + error);
+          this.getQuotesFailed = true;
+          console.log(this.getQuotesFailed);
         });
     },
     postAdd() {
@@ -122,6 +128,13 @@ export default {
 // START of #posts
 //
 #posts {
+  min-height: 100vh; // So it doesn't flash super short for a second.
+  &.get-quotes-failed {
+    min-height: inherit;
+    p {
+      padding: 3rem 0;
+    }
+  }
   div {
     border-bottom: 1px solid $fontcolor;
     margin: 1rem 0;
@@ -268,5 +281,10 @@ input {
   100% {
     background-position: 0% 50%;
   }
+}
+// <transition-group name="records">
+.records-enter {
+  opacity: 0;
+  transform: translateY(40px);
 }
 </style>

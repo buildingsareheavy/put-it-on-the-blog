@@ -11,13 +11,8 @@
     <div class="page">
       <h1>Put It On The Blog</h1>
       <div class="container">
-        <transition
-          name="fade"
-          mode="out-in"
-          @beforeLeave="beforeLeave"
-          @enter="enter"
-          @afterEnter="afterEnter"
-        >
+        <transition name="fade" mode="out-in">
+          <!-- More complex transitions found here: https://markus.oberlehner.net/blog/vue-router-page-transitions/ -->
           <router-view></router-view>
         </transition>
       </div>
@@ -38,23 +33,6 @@ export default {
     return {
       prevHeight: 0
     };
-  },
-  methods: {
-    beforeLeave(element) {
-      this.prevHeight = getComputedStyle(element).height;
-    },
-    enter(element) {
-      const { height } = getComputedStyle(element);
-
-      element.style.height = this.prevHeight;
-
-      setTimeout(() => {
-        element.style.height = height;
-      });
-    },
-    afterEnter(element) {
-      element.style.height = "auto";
-    }
   }
 };
 </script>
