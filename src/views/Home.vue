@@ -22,18 +22,20 @@
           onblur="this.placeholder = 'Anonymous'"
         >
       </p>
-      <button class="post-button-submit" @click="postQuotes">Submit</button>
       <button class="post-button-cancel" @click="postCancel">Cancel</button>
+      <button class="post-button-submit" @click="postQuotes">Submit</button>
     </div>
     <div class="post-button" v-else>
       <button class="post-button-add" @click="postAdd">Add Post</button>
     </div>
+    <!-- <div v-for="record in records.slice(0, loadMore)" :key="record.id"> -->
     <div v-for="record in records" :key="record.id">
       <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
       <p class="quote" v-else>Intentionally Left Blank</p>
       <p class="name" v-if="record.fields.Name">{{ record.fields.Name }}</p>
       <p class="name" v-else>Anonymous</p>
     </div>
+    <!-- <button class="load-more" @click="onLoadMore">Load More</button> -->
   </div>
 </template>
 
@@ -41,7 +43,7 @@
 import axios from "axios";
 
 export default {
-  name: "home",
+  name: "Home",
   data() {
     return {
       records: "",
@@ -49,7 +51,8 @@ export default {
       postButtonActive: false,
       postButtonFailedMessage: false,
       postName: "",
-      postQuote: ""
+      postQuote: "",
+      loadMore: 5
     };
   },
   beforeCreate() {
@@ -67,8 +70,8 @@ export default {
         },
         params: {
           sortField: "Time",
-          sortDirection: "desc",
-          maxRecords: "5"
+          sortDirection: "desc"
+          // maxRecords: "100"
         }
       })
         .then(response => {
@@ -83,6 +86,10 @@ export default {
     },
     postCancel() {
       this.postButtonActive = false;
+    },
+    onLoadMore(index) {
+      this.loadMore += 10;
+      console.log(this.loadMore);
     },
     postQuotes() {
       return axios({
@@ -100,11 +107,13 @@ export default {
         }
       })
         .then(response => {
+          // eslint-disable-next-line
           console.log(response);
           this.getQuotes();
           this.postButtonActive = false;
         })
         .catch(error => {
+          // eslint-disable-next-line
           console.log(error);
           this.postButtonFailedMessage = true;
         });
@@ -184,7 +193,7 @@ export default {
       }
     }
     input {
-      transition: width 0.4s;
+      transition: all 0.4s;
       border: none;
       border-bottom: 1px solid transparent;
       &:focus {
@@ -223,7 +232,8 @@ export default {
       border: none;
       outline: none;
       margin: 0 0 -3rem 0;
-      background: lightblue;
+      background: lighten(#212121, 2);
+      color: white;
       transform: translateX(0vw);
       transform: translateY(-1rem);
       border-radius: 0 0 20px 20px;
@@ -234,24 +244,17 @@ export default {
       transition: background 0.2s;
       &:hover {
         cursor: pointer;
-        background: skyblue;
+        background: lighten(#212121, 17);
       }
       &:focus {
         outline: none;
       }
-    }
-    .post-button-cancel {
-      background: salmon;
-
-      &:hover {
+      &.post-button-cancel {
         background: tomato;
-      }
-    }
-    .post-button-submit {
-      background: lightgreen;
-
-      &:hover {
-        background: palegreen;
+        color: #212121;
+        &:hover {
+          background: lighten(tomato, 8);
+        }
       }
     }
   }
