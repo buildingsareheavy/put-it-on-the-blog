@@ -28,14 +28,12 @@
     <div class="post-button" v-else>
       <button class="post-button-add" @click="postAdd">Add Post</button>
     </div>
-    <!-- <div v-for="record in records.slice(0, loadMore)" :key="record.id"> -->
     <div v-for="record in records" :key="record.id">
       <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
       <p class="quote" v-else>Intentionally Left Blank</p>
       <p class="name" v-if="record.fields.Name">{{ record.fields.Name }}</p>
       <p class="name" v-else>Anonymous</p>
     </div>
-    <!-- <button class="load-more" @click="onLoadMore">Load More</button> -->
   </div>
 </template>
 
@@ -47,12 +45,10 @@ export default {
   data() {
     return {
       records: "",
-      errors: [],
       postButtonActive: false,
       postButtonFailedMessage: false,
       postName: "",
-      postQuote: "",
-      loadMore: 5
+      postQuote: ""
     };
   },
   beforeCreate() {
@@ -71,14 +67,14 @@ export default {
         params: {
           sortField: "Time",
           sortDirection: "desc"
-          // maxRecords: "100"
         }
       })
         .then(response => {
           this.records = response.data.records;
         })
         .catch(error => {
-          this.errors.push(error);
+          // eslint-disable-next-line
+          console.log("GET: " + error);
         });
     },
     postAdd() {
@@ -86,10 +82,6 @@ export default {
     },
     postCancel() {
       this.postButtonActive = false;
-    },
-    onLoadMore(index) {
-      this.loadMore += 10;
-      console.log(this.loadMore);
     },
     postQuotes() {
       return axios({
@@ -114,7 +106,7 @@ export default {
         })
         .catch(error => {
           // eslint-disable-next-line
-          console.log(error);
+          console.log("POST: " + error);
           this.postButtonFailedMessage = true;
         });
     }
@@ -126,6 +118,9 @@ export default {
 .body-home {
   background: gold;
 }
+//
+// START of #posts
+//
 #posts {
   div {
     border-bottom: 1px solid $fontcolor;
@@ -141,99 +136,19 @@ export default {
     &:last-of-type {
       border-bottom: none;
     }
-    .name {
-      text-align: right;
-      &::before {
-        content: "- ";
-      }
-      input {
-        width: 10ch;
-        &:focus {
-          width: 15ch;
-        }
-      }
-    }
-    .quote {
-      text-align: center;
-      font-style: italic;
-      &::after,
-      &::before {
-        content: '"';
-      }
-      input {
-        margin-left: 4px;
-        width: 18ch;
-        &:focus {
-          width: 80%;
-        }
-      }
-    }
-    .failed {
-      text-align: center;
-      background: salmon;
-      font-weight: 800;
-      border-radius: 0 0 20px 20px;
-      padding: 1rem;
-      margin: 0 auto;
-      display: inline-block;
-      transform: translateY(-4.5rem);
-      background: linear-gradient(
-        -45deg,
-        hotpink,
-        cyan,
-        springgreen,
-        yellow,
-        orange,
-        crimson
-      );
-      background-size: 400% 400%;
-      animation: failedMessage 3s infinite;
-      @media screen and (max-width: $width) {
-        transform: translateY(-3.25rem);
-      }
-    }
-    input {
-      transition: all 0.4s;
-      border: none;
-      border-bottom: 1px solid transparent;
-      &:focus {
-        border-bottom: 1px solid #212121;
-      }
-    }
   }
+  //
+  // START of .post-button
+  //
   .post-button {
     padding: 0;
     margin-bottom: -1rem;
     border-bottom: none;
-    &.active {
-      margin: 1rem 0;
-      padding: 1.5rem 2rem 2rem 2rem;
-      @media screen and (max-width: $width) {
-        padding: 0.25rem 2rem 1rem 2rem; // reset
-        button {
-          transform: translateY(2rem);
-        }
-      }
-      border-bottom: 1px solid #212121;
-      button {
-        margin: 0 1rem;
-        border-radius: 20px 20px 0 0;
-        transform: translateY(2rem);
-        @media screen and (max-width: $width) {
-          transform: translateY(1rem);
-        }
-      }
-      input {
-        font-size: 1rem;
-        text-align: center;
-      }
-    }
     button {
       border: none;
-      outline: none;
       margin: 0 0 -3rem 0;
-      background: lighten(#212121, 2);
-      color: white;
+      background: lighten($fontcolor, 2);
+      color: $foreground;
       transform: translateX(0vw);
       transform: translateY(-1rem);
       border-radius: 0 0 20px 20px;
@@ -242,23 +157,107 @@ export default {
       text-transform: uppercase;
       padding: 0.5rem 1rem;
       transition: background 0.2s;
-      &:hover {
-        cursor: pointer;
-        background: lighten(#212121, 17);
-      }
+      &,
       &:focus {
         outline: none;
       }
+      &:hover {
+        cursor: pointer;
+        background: lighten($fontcolor, 17);
+      }
       &.post-button-cancel {
-        background: tomato;
-        color: #212121;
+        background: $cancelcolor;
+        color: $fontcolor;
         &:hover {
-          background: lighten(tomato, 8);
+          background: lighten($cancelcolor, 8);
         }
       }
     }
+    //
+    // START .post-button.active
+    //
+    &.active {
+      margin: 1rem 0;
+      padding: 1.5rem 2rem 2rem 2rem;
+      border-bottom: 1px solid $fontcolor;
+      @media screen and (max-width: $width) {
+        padding: 0.25rem 2rem 1rem 2rem; // reset
+      }
+      button {
+        margin: 0 1rem;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(2rem);
+        @media screen and (max-width: $width) {
+          transform: translateY(1rem); // reset
+        }
+      }
+    }
+  } // END OF .post-button
+}
+//
+// END of #posts
+//
+input {
+  transition: all 0.4s;
+  border: none;
+  border-bottom: 1px solid transparent;
+  font-size: 1rem;
+  text-align: center;
+  &:focus {
+    border-bottom: 1px solid $fontcolor;
   }
 }
+.name {
+  text-align: right;
+  &::before {
+    content: "- ";
+  }
+  input {
+    width: 10ch;
+    &:focus {
+      width: 15ch;
+    }
+  }
+}
+.quote {
+  text-align: center;
+  font-style: italic;
+  &::after,
+  &::before {
+    content: '"';
+  }
+  input {
+    margin-left: 4px;
+    width: 18ch;
+    &:focus {
+      width: 80%;
+    }
+  }
+}
+.failed {
+  text-align: center;
+  font-weight: 800;
+  border-radius: 0 0 20px 20px;
+  padding: 1rem;
+  margin: 0 auto;
+  display: inline-block;
+  transform: translateY(-4.5rem);
+  background: linear-gradient(
+    -45deg,
+    hotpink,
+    cyan,
+    springgreen,
+    yellow,
+    orange,
+    crimson
+  );
+  background-size: 400% 400%;
+  animation: failedMessage 3s infinite;
+  @media screen and (max-width: $width) {
+    transform: translateY(-3.25rem);
+  }
+}
+
 @keyframes failedMessage {
   0% {
     background-position: 0% 50%;

@@ -14,14 +14,12 @@
 
 - [x] Add a response after the post is submitted. Maybe add a "Your post has been successfully added, refreshing in 5 seconds."
 
-- [ ] Clean up CSS
+- [x] Clean up CSS
 
 - [ ] Make loadQuote and postQuote into thier own components.
 
 - [ ] Make buttons thier own components too.
 
 - [ ] Add `stagger` to `getQuotes()`.
-
-- [ ] Add "load more" button at the bottom of homepage.
 
 - [ ] Add routing for `/submit` and figure out how to stay on homepage but with props working the right way.
