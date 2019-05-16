@@ -1,7 +1,7 @@
 <template>
   <div id="posts" :class="{ 'get-quotes-failed' : getQuotesFailed }">
     <div class="post-button active" v-if="postButtonActive == true">
-      <p class="failed" v-if="postButtonFailedMessage">Uh oh... Something went wrong.</p>
+      <p class="post-quote-failed" v-if="postButtonFailedMessage">Uh oh... Something went wrong.</p>
       <p class="quote">
         <input
           v-model="postQuote"
@@ -158,6 +158,9 @@ export default {
     margin-bottom: -1rem;
     border-bottom: none;
     button {
+      &.post-button-add {
+        margin-bottom: 1.5rem;
+      }
       border: none;
       margin: 0 0 -3rem 0;
       background: lighten($fontcolor, 2);
@@ -170,10 +173,6 @@ export default {
       text-transform: uppercase;
       padding: 0.5rem 1rem;
       transition: background 0.2s;
-      &,
-      &:focus {
-        outline: none;
-      }
       &:hover {
         cursor: pointer;
         background: lighten($fontcolor, 17);
@@ -202,6 +201,7 @@ export default {
         transform: translateY(2rem);
         @media screen and (max-width: $width) {
           transform: translateY(1rem); // reset
+          margin-top: 0.5rem;
         }
       }
     }
@@ -247,7 +247,7 @@ input {
     }
   }
 }
-.failed {
+.post-quote-failed {
   text-align: center;
   font-weight: 800;
   border-radius: 0 0 20px 20px;

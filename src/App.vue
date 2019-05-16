@@ -139,6 +139,7 @@ nav {
     padding: 1rem 0;
     right: 0; //reset
     top: 0; // reset
+    z-index: 1; // was going under 'add post' button
     box-shadow: 0px 2px 10px 0px $fontcolor;
     li {
       display: inline;

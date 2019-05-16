@@ -4,7 +4,7 @@
 
 ### May 6 - Monday
 
-- [ ] Add `beforeRouteEnter` to homepage to stop flash of content for API call or fade them in individually.
+- [x] Add `beforeRouteEnter` to homepage to stop flash of content for API call or fade them in individually. _I just added a transition instead and it works fine_
 
 - [x] Find out if Airtable has an easy API for forms or if I need to create a `POST` request from axios.
 
@@ -20,6 +20,14 @@
 
 - [ ] Make buttons thier own components too.
 
-- [ ] Add `stagger` to `getQuotes()`.
+- [x] Add `stagger` to `getQuotes()`. _I added a transition to all, since I am displaying all the quotes at once._
 
 - [ ] Add routing for `/submit` and figure out how to stay on homepage but with props working the right way.
+
+### May 15th - Wednesday
+
+- [ ] change `.failed` to `loadQuoteFailed` and clean up some of the HTML.
+
+- [x] `Add Post` needs more `margin-bottom` and `Cancel` and `Submit` need more `margin-top` on mobile
+
+- [x] All buttons go over the menu on mobile.
