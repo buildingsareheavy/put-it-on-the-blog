@@ -70,7 +70,8 @@ export default {
         },
         params: {
           sortField: "Time",
-          sortDirection: "desc"
+          sortDirection: "desc",
+          filterByFormula: "=NOT({Hide}, '')" // IF({Hide}, "false" || "") doesn't work, so must use NOT instead.
         }
       })
         .then(response => {
