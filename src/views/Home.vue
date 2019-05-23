@@ -81,7 +81,7 @@ export default {
           // eslint-disable-next-line
           console.log("GET: " + error);
           this.getQuotesFailed = true;
-          console.log(this.getQuotesFailed);
+          // console.log(this.getQuotesFailed);
         });
     },
     postAdd() {
@@ -202,6 +202,7 @@ export default {
         transform: translateY(2rem);
         @media screen and (max-width: $width) {
           transform: translateY(1rem); // reset
+          margin: 0 0.25rem;
           margin-top: 0.5rem;
         }
       }
