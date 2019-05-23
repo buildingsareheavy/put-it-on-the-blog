@@ -26,8 +26,12 @@
 
 ### May 15th - Wednesday
 
-- [ ] change `.failed` to `loadQuoteFailed` and clean up some of the HTML.
+- [x] change `.failed` to `loadQuoteFailed` and clean up some of the HTML.
 
 - [x] `Add Post` needs more `margin-bottom` and `Cancel` and `Submit` need more `margin-top` on mobile
 
 - [x] All buttons go over the menu on mobile.
+
+### May 23rd - Thursday
+
+- [ ] Add meta tags and favicon
