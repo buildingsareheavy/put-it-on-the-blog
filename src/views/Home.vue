@@ -26,7 +26,7 @@
       <button class="post-button-submit" @click="postQuotes">Submit</button>
     </div>
     <div class="post-button" v-else>
-      <button class="post-button-add" @click="postAdd" v-show="!getQuotesFailed">Add Post</button>
+      <button class="post-button-add" @click.prevent="postAdd" v-show="!getQuotesFailed">Add Post</button>
     </div>
     <p v-if="getQuotesFailed">Uh oh... Looks like something isn't loading right now.</p>
     <transition-group name="records">

@@ -34,4 +34,4 @@
 
 ### May 23rd - Thursday
 
-- [ ] Add meta tags and favicon
+- [x] Add meta tags and favicon
