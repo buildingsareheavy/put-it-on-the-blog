@@ -1,40 +1,48 @@
 <template>
-  <div id="posts" :class="{ 'get-quotes-failed' : getQuotesFailed }">
+  <div id="posts" :class="{ 'get-quotes-failed' : getPostsFailed }">
     <div class="post-button active" v-if="postButtonActive == true">
-      <p class="post-quote-failed" v-if="postButtonFailedMessage">Uh oh... Something went wrong.</p>
+      <p v-if="errors" class="post-quote-failed">Oops! Between 3 and 255 characters please</p>
+      <p
+        v-else-if="formTouched && uiState === 'submit clicked'"
+        class="post-quote-failed"
+      >You can't submit a blank form</p>
+      <p v-else-if="uiState === 'form submitted'" class="success">Hooray! Your form was submitted!</p>
+
       <p class="quote">
+        <label for="postQuote">Quote</label>
         <input
-          v-model="postQuote"
+          id="postQuote"
+          v-model="$v.formResponses.postQuote.$model"
           type="text"
           name="quote"
           placeholder="Intentionally Left Blank"
           onfocus="this.placeholder = ''"
           onblur="this.placeholder = 'Intentionally Left Blank'"
-        >
+        />
       </p>
       <p class="name">
+        <label for="postName">Name</label>
         <input
-          v-model="postName"
+          id="postName"
+          v-model="$v.formResponses.postName.$model"
           type="text"
           name="name"
           placeholder="Anonymous"
           onfocus="this.placeholder = ''"
           onblur="this.placeholder = 'Anonymous'"
-        >
+        />
       </p>
-      <button class="post-button-cancel" @click="postCancel">Cancel</button>
-      <button class="post-button-submit" @click="postQuotes">Submit</button>
+      <button class="post-button-cancel" @click="formCancel">Cancel</button>
+      <button class="post-button-submit" @click.prevent="formSubmit">Submit</button>
     </div>
     <div class="post-button" v-else>
-      <button class="post-button-add" @click.prevent="postAdd" v-show="!getQuotesFailed">Add Post</button>
+      <button class="post-button-add" @click.prevent="postAdd" v-show="!getPostsFailed">Add Post</button>
     </div>
-    <p v-if="getQuotesFailed">Uh oh... Looks like something isn't loading right now.</p>
+    <p v-if="getPostsFailed">Uh oh... Looks like something isn't working ☹️</p>
     <transition-group name="records">
       <div v-for="record in records" :key="record.id">
-        <p class="quote" v-if="record.fields.Quote">{{ record.fields.Quote }}</p>
-        <p class="quote" v-else>Intentionally Left Blank</p>
-        <p class="name" v-if="record.fields.Name">{{ record.fields.Name }}</p>
-        <p class="name" v-else>Anonymous</p>
+        <p class="quote">{{ record.fields.Quote }}</p>
+        <p class="name">{{ record.fields.Name }}</p>
       </div>
     </transition-group>
   </div>
@@ -42,27 +50,47 @@
 
 <script>
 import axios from "axios";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   name: "Home",
   data() {
     return {
-      records: "",
+      records: [],
       postButtonActive: false,
-      postButtonFailedMessage: false,
-      postName: "",
-      postQuote: "",
-      getQuotesFailed: false
+      getPostsFailed: false,
+      uiState: "submit not clicked",
+      formTouched: false,
+      errors: false,
+      empty: true,
+      formResponses: {
+        postName: null,
+        postQuote: null
+      }
     };
+  },
+  validations: {
+    formResponses: {
+      postName: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(255)
+      },
+      postQuote: {
+        required,
+        minLength: minLength(3),
+        maxLength: maxLength(255)
+      }
+    }
   },
   beforeCreate() {
     document.body.className = "body-home";
   },
   created() {
-    this.getQuotes();
+    this.getPosts();
   },
   methods: {
-    getQuotes() {
+    getPosts() {
       axios({
         url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
         headers: {
@@ -80,17 +108,25 @@ export default {
         .catch(error => {
           // eslint-disable-next-line
           console.log("GET: " + error);
-          this.getQuotesFailed = true;
-          // console.log(this.getQuotesFailed);
+          this.getPostsFailed = true;
         });
     },
     postAdd() {
       this.postButtonActive = true;
     },
-    postCancel() {
+    formCancel() {
       this.postButtonActive = false;
     },
-    postQuotes() {
+    formSubmit() {
+      this.formTouched = !this.$v.formResponses.$anyDirty;
+      this.errors = this.$v.formResponses.$anyError;
+      this.uiState = "submit clicked";
+      if (this.errors === false && this.formTouched === false) {
+        this.uiState = "form submitted";
+        this.submitPosts();
+      }
+    },
+    submitPosts() {
       return axios({
         method: "post",
         url: process.env.VUE_APP_API_URL + process.env.VUE_APP_API_SUFFIX,
@@ -100,21 +136,20 @@ export default {
         },
         data: {
           fields: {
-            Name: this.postName,
-            Quote: this.postQuote
+            Name: this.formResponses.postName,
+            Quote: this.formResponses.postQuote
           }
         }
       })
         .then(response => {
           // eslint-disable-next-line
           console.log(response);
-          this.getQuotes();
+          this.getPosts();
           this.postButtonActive = false;
         })
         .catch(error => {
           // eslint-disable-next-line
           console.log("POST: " + error);
-          this.postButtonFailedMessage = true;
         });
     }
   }
@@ -222,10 +257,24 @@ input {
     border-bottom: 1px solid $fontcolor;
   }
 }
+.name,
+.quote {
+  label {
+    color: lighten($fontcolor, 50%);
+    position: absolute;
+    font-size: 0.85rem;
+  }
+}
+
 .name {
   text-align: right;
   &::before {
     content: "- ";
+  }
+  label {
+    transform: translate(4rem, 1.5rem);
+    left: 70%;
+    margin-left: -7.5rem;
   }
   input {
     width: 10ch;
@@ -234,6 +283,7 @@ input {
     }
   }
 }
+
 .quote {
   text-align: center;
   font-style: italic;
@@ -241,32 +291,33 @@ input {
   &::before {
     content: '"';
   }
+  label {
+    transform: translate(4rem, 1.5rem);
+    left: 50%;
+    margin-left: -5rem;
+  }
   input {
-    margin-left: 4px;
+    margin-left: 5px;
     width: 18ch;
     &:focus {
       width: 80%;
     }
   }
 }
+
 .post-quote-failed {
   text-align: center;
   font-weight: 800;
   border-radius: 0 0 20px 20px;
   padding: 1rem;
   margin: 0 auto;
-  display: inline-block;
+  margin-bottom: calc(-3.25rem + 1px);
+  color: $foreground;
+  display: absolute;
   transform: translateY(-4.5rem);
-  background: linear-gradient(
-    -45deg,
-    hotpink,
-    cyan,
-    springgreen,
-    yellow,
-    orange,
-    crimson
-  );
-  background-size: 400% 400%;
+  background: linear-gradient(-45deg, tomato, deeppink, tomato);
+
+  background-size: 500% 500%;
   animation: failedMessage 3s infinite;
   @media screen and (max-width: $width) {
     transform: translateY(-3.25rem);
